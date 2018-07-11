@@ -1,0 +1,137 @@
+
+using my.tms from '../db/data-model';
+using OrdersService from './OrdersService';
+using OrdersService.Orders from './OrdersService';
+
+annotate OrdersService.Orders with {
+  ID 
+    @Common.Label : 'Ид.';
+    //@Common.FieldControl: #ReadOnly;    
+  orderStatusId 
+    @Common.Label : 'Статус заказа';
+    //@Common.FieldControl: #ReadOnly;    
+  orderWeight 
+    @Common.Label : 'Вес, кг';
+    //@Common.FieldControl: #ReadOnly;    
+  orderLoadingLocationId 
+    @Common.Label : 'Местоположение погрузки';
+    //@Common.FieldControl: #ReadOnly;    
+  orderDischargeLocationId 
+    @Common.Label : 'Местоположение разгрузки';
+    //@Common.FieldControl: #ReadOnly;    
+  orderDistance 
+    @Common.Label : 'Расстояние, км';
+    //@Common.FieldControl: #ReadOnly;    
+  orderTransportInfoId 
+    @Common.Label : 'Информация о перевозчике';
+    //@Common.FieldControl: #ReadOnly; 
+  orderPlanDepartureDT 
+    @Common.Label : 'Плановая дата и время отправления';
+    //@Common.FieldControl: #ReadOnly; 
+  orderActualDepartureDT 
+    @Common.Label : 'Фактическая дата и время отправления';
+    //@Common.FieldControl: #ReadOnly;   
+  orderPlanArrivalDT 
+    @Common.Label : 'Плановая дата и время прибытия';
+    //@Common.FieldControl: #ReadOnly;  
+  orderActualArrivalDT 
+    @Common.Label : 'Фактическая дата и время прибытия';
+    //@Common.FieldControl: #ReadOnly;     
+};
+
+
+annotate OrdersService.Orders with @(
+    Common: { SemanticKey: [orderStatusId] },
+      
+    Capabilities: {
+        Insertable:true, Updatable:true, Deletable:true,
+        FilterRestrictions: {
+            NonFilterableProperties: [
+                //carEngineType,
+            ]
+        },
+        SortRestrictions: {
+			NonSortableProperties: [
+                //carRegNumber
+			]
+		},
+		SearchRestrictions: {
+			Searchable: true
+		}
+    },
+
+  UI.SelectionFields: 
+  [
+    ID,
+    orderStatusId,
+    orderWeight,
+    orderDistance,    
+    orderPlanDepartureDT,
+    orderPlanArrivalDT,
+  ],
+  
+  UI.HeaderInfo: {
+    TypeName:'Заказ', 
+    TypeNamePlural:'Заказы',
+    Title: { Value: ID },
+	Description: { Label: 'Статус', Value: orderStatusId}    
+  },
+
+  UI.Identification:
+  [
+      //{$Type: 'UI.DataField', Value: ID},
+  ],
+  
+  UI.LineItem: [ 
+    {$Type: 'UI.DataField', Value: ID},
+    {$Type: 'UI.DataField', Value: orderStatusId},
+    {$Type: 'UI.DataField', Value: orderWeight},
+    {$Type: 'UI.DataField', Value: orderLoadingLocationId},
+    {$Type: 'UI.DataField', Value: orderDischargeLocationId},
+    {$Type: 'UI.DataField', Value: orderDistance}, 
+    {$Type: 'UI.DataField', Value: orderTransportInfoId}, 
+    {$Type: 'UI.DataField', Value: orderPlanDepartureDT}, 
+    {$Type: 'UI.DataField', Value: orderActualDepartureDT},  
+    {$Type: 'UI.DataField', Value: orderPlanArrivalDT}, 
+    {$Type: 'UI.DataField', Value: orderActualArrivalDT},    
+  ],
+
+    UI.FieldGroup#Main: {
+	Label: 'Main Information',
+	Data: [
+            {$Type: 'UI.DataField', Value: ID},	
+    		{$Type: 'UI.DataField', Value: orderStatusId},
+    		{$Type: 'UI.DataField', Value: orderWeight},
+    		{$Type: 'UI.DataField', Value: orderLoadingLocationId},
+    		{$Type: 'UI.DataField', Value: orderDischargeLocationId}
+		  ]
+	},
+	
+  UI.FieldGroup#Detail: {
+	Label: 'Detail Information',
+	Data: [
+    		{$Type: 'UI.DataField', Value: orderDistance},    
+    		{$Type: 'UI.DataField', Value: orderTransportInfoId}, 
+    		{$Type: 'UI.DataField', Value: orderPlanDepartureDT}, 
+    		{$Type: 'UI.DataField', Value: orderActualDepartureDT},    
+    		{$Type: 'UI.DataField', Value: orderPlanArrivalDT},
+    		{$Type: 'UI.DataField', Value: orderActualArrivalDT},    		
+		]
+	},	
+	
+  UI.Facets:
+  [
+    {
+      $Type:'UI.CollectionFacet', 
+      ID: 'FOrders',
+      Label:'Заказы',  
+      
+      Facets: [ 
+               { $Type:'UI.ReferenceFacet',  ID: 'FOrdersMain',   Label: 'Основные данные', Target: '@UI.FieldGroup#Main' },
+               { $Type:'UI.ReferenceFacet',  ID: 'FOrdersDetail', Label: 'Доп. данные',     Target: '@UI.FieldGroup#Detail' }
+              ],          
+    }
+  ]	
+);
+
+
