@@ -1,970 +1,485 @@
-<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
-  <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
-  </edmx:Reference>
-  <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Measures.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-    <edmx:Include Alias="Measures" Namespace="Org.OData.Measures.V1"/>
-  </edmx:Reference>
-  <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Capabilities.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-    <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
-  </edmx:Reference>
-  <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata-data-aggregation-ext/v4.0/cs02/vocabularies/Org.OData.Aggregation.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-    <edmx:Include Alias="Aggregation" Namespace="Org.OData.Aggregation.V1"/>
-  </edmx:Reference>
-  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/462030211/Analytics.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-    <edmx:Include Alias="Analytics" Namespace="com.sap.vocabularies.Analytics.v1"/>
-  </edmx:Reference>
-  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
-  </edmx:Reference>
-  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470971/Communication.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-    <edmx:Include Alias="Communication" Namespace="com.sap.vocabularies.Communication.v1"/>
-  </edmx:Reference>
-  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
-    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
-  </edmx:Reference>
-  <edmx:DataServices m:DataServiceVersion="2.0">
-    <Schema Namespace="CatalogService" Alias="CatalogService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-      <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
-        <EntitySet Name="Transports" EntityType="CatalogService.Transports"/>
-        <EntitySet Name="Drivers" EntityType="CatalogService.Drivers"/>
-        <EntitySet Name="Orders" EntityType="CatalogService.Orders"/>
-        <EntitySet Name="OrdersNew" EntityType="CatalogService.OrdersNew"/>
-        <EntitySet Name="Locations" EntityType="CatalogService.Locations"/>
-        <EntitySet Name="Routes" EntityType="CatalogService.Routes"/>
-        <EntitySet Name="ETypes" EntityType="CatalogService.ETypes"/>
-        <EntitySet Name="CarBodies" EntityType="CatalogService.CarBodies"/>
-        <EntitySet Name="TStatus" EntityType="CatalogService.TStatus"/>
-        <EntitySet Name="OStatus" EntityType="CatalogService.OStatus"/>
-        <EntitySet Name="Engines" EntityType="CatalogService.Engines"/>
-        <AssociationSet Name="Transports_carEngineType" Association="CatalogService.Transports_carEngineType">
-          <End Role="Transports" EntitySet="Transports"/>
-          <End Role="Engines" EntitySet="Engines"/>
-        </AssociationSet>
-        <AssociationSet Name="Transports_carDriver" Association="CatalogService.Transports_carDriver">
-          <End Role="Transports" EntitySet="Transports"/>
-          <End Role="Drivers" EntitySet="Drivers"/>
-        </AssociationSet>
-        <AssociationSet Name="Transports_carOriginalLocation" Association="CatalogService.Transports_carOriginalLocation">
-          <End Role="Transports" EntitySet="Transports"/>
-          <End Role="Locations" EntitySet="Locations"/>
-        </AssociationSet>
-        <AssociationSet Name="Routes_routeLocation" Association="CatalogService.Routes_routeLocation">
-          <End Role="Routes" EntitySet="Routes"/>
-          <End Role="Locations" EntitySet="Locations"/>
-        </AssociationSet>
-      </EntityContainer>
-      <EntityType Name="Transports" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="carBrand" Type="Edm.String"/>
-        <Property Name="carModel" Type="Edm.String"/>
-        <Property Name="carBodyId" Type="Edm.Int32" sap:value-list="fixed-values"/>
-        <Property Name="carStatusId" Type="Edm.Int32" sap:value-list="fixed-values"/>
-        <Property Name="carRegNumber" Type="Edm.String"/>
-        <NavigationProperty Name="carEngineType" Relationship="CatalogService.Transports_carEngineType" FromRole="Transports" ToRole="Engines" sap:value-list="fixed-values"/>
-        <Property Name="carLiftCapacity" Type="Edm.Int32"/>
-        <NavigationProperty Name="carDriver" Relationship="CatalogService.Transports_carDriver" FromRole="Transports" ToRole="Drivers" sap:value-list="fixed-values"/>
-        <NavigationProperty Name="carOriginalLocation" Relationship="CatalogService.Transports_carOriginalLocation" FromRole="Transports" ToRole="Locations" sap:value-list="fixed-values"/>
-        <Property Name="carEngineType_ID" Type="Edm.Int32" sap:value-list="fixed-values"/>
-        <Property Name="carDriver_ID" Type="Edm.Int32" sap:value-list="fixed-values"/>
-        <Property Name="carOriginalLocation_ID" Type="Edm.Int32" sap:value-list="fixed-values"/>
-      </EntityType>
-      <EntityType Name="Drivers" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="driverQualification" Type="Edm.String"/>
-        <Property Name="driverSurname" Type="Edm.String"/>
-        <Property Name="driverName" Type="Edm.String"/>
-        <Property Name="driverMiddleName" Type="Edm.String"/>
-        <Property Name="driverPhone" Type="Edm.Int32"/>
-        <Property Name="driverStatus" Type="Edm.Boolean"/>
-      </EntityType>
-      <EntityType Name="Orders" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="orderStatusId" Type="Edm.Int32"/>
-        <Property Name="orderWeight" Type="Edm.Decimal" Scale="2" Precision="10"/>
-        <Property Name="orderLoadingLocationId" Type="Edm.Int32"/>
-        <Property Name="orderDischargeLocationId" Type="Edm.Int32"/>
-        <Property Name="orderDistance" Type="Edm.Decimal" Scale="2" Precision="10"/>
-        <Property Name="orderTransportInfoId" Type="Edm.Int32"/>
-        <Property Name="orderPlanDepartureDT" Type="Edm.DateTimeOffset"/>
-        <Property Name="orderActualDepartureDT" Type="Edm.DateTimeOffset"/>
-        <Property Name="orderPlanArrivalDT" Type="Edm.DateTimeOffset"/>
-        <Property Name="orderActualArrivalDT" Type="Edm.DateTimeOffset"/>
-      </EntityType>
-      <EntityType Name="OrdersNew" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="orderStatusId" Type="Edm.Int32"/>
-        <Property Name="orderWeight" Type="Edm.Decimal" Scale="2" Precision="10"/>
-        <Property Name="orderLoadingLocationId" Type="Edm.Int32"/>
-        <Property Name="orderDischargeLocationId" Type="Edm.Int32"/>
-        <Property Name="orderDistance" Type="Edm.Decimal" Scale="2" Precision="10"/>
-        <Property Name="orderTransportInfoId" Type="Edm.Int32"/>
-        <Property Name="orderPlanDepartureDT" Type="Edm.DateTimeOffset"/>
-        <Property Name="orderActualDepartureDT" Type="Edm.DateTimeOffset"/>
-        <Property Name="orderPlanArrivalDT" Type="Edm.DateTimeOffset"/>
-        <Property Name="orderActualArrivalDT" Type="Edm.DateTimeOffset"/>
-      </EntityType>
-      <EntityType Name="Locations" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="locationLatitude" Type="Edm.Double"/>
-        <Property Name="locationLongitude" Type="Edm.Double"/>
-      </EntityType>
-      <EntityType Name="Routes" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="routeSerialNumber" Type="Edm.Int32"/>
-        <NavigationProperty Name="routeLocation" Relationship="CatalogService.Routes_routeLocation" FromRole="Routes" ToRole="Locations"/>
-        <Property Name="routeLocation_ID" Type="Edm.Int32"/>
-      </EntityType>
-      <EntityType Name="ETypes" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="eventTypeName" Type="Edm.String"/>
-      </EntityType>
-      <EntityType Name="CarBodies" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="carBodyName" Type="Edm.String"/>
-      </EntityType>
-      <EntityType Name="TStatus" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="statusName" Type="Edm.String"/>
-      </EntityType>
-      <EntityType Name="OStatus" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="statusName" Type="Edm.String"/>
-      </EntityType>
-      <EntityType Name="Engines" Abstract="false" OpenType="false">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
-        <Property Name="engineName" Type="Edm.String"/>
-      </EntityType>
-      <Association Name="Transports_carEngineType">
-        <End Role="Transports" Type="CatalogService.Transports" Multiplicity="*"/>
-        <End Role="Engines" Type="CatalogService.Engines" Multiplicity="0..1"/>
-        <ReferentialConstraint>
-          <Principal Role="Engines">
-            <PropertyRef Name="ID"/>
-          </Principal>
-          <Dependent Role="Transports">
-            <PropertyRef Name="carEngineType_ID"/>
-          </Dependent>
-        </ReferentialConstraint>
-      </Association>
-      <Association Name="Transports_carDriver">
-        <End Role="Transports" Type="CatalogService.Transports" Multiplicity="*"/>
-        <End Role="Drivers" Type="CatalogService.Drivers" Multiplicity="0..1"/>
-        <ReferentialConstraint>
-          <Principal Role="Drivers">
-            <PropertyRef Name="ID"/>
-          </Principal>
-          <Dependent Role="Transports">
-            <PropertyRef Name="carDriver_ID"/>
-          </Dependent>
-        </ReferentialConstraint>
-      </Association>
-      <Association Name="Transports_carOriginalLocation">
-        <End Role="Transports" Type="CatalogService.Transports" Multiplicity="*"/>
-        <End Role="Locations" Type="CatalogService.Locations" Multiplicity="0..1"/>
-        <ReferentialConstraint>
-          <Principal Role="Locations">
-            <PropertyRef Name="ID"/>
-          </Principal>
-          <Dependent Role="Transports">
-            <PropertyRef Name="carOriginalLocation_ID"/>
-          </Dependent>
-        </ReferentialConstraint>
-      </Association>
-      <Association Name="Routes_routeLocation">
-        <End Role="Routes" Type="CatalogService.Routes" Multiplicity="*"/>
-        <End Role="Locations" Type="CatalogService.Locations" Multiplicity="0..1"/>
-        <ReferentialConstraint>
-          <Principal Role="Locations">
-            <PropertyRef Name="ID"/>
-          </Principal>
-          <Dependent Role="Routes">
-            <PropertyRef Name="routeLocation_ID"/>
-          </Dependent>
-        </ReferentialConstraint>
-      </Association>
-      <Annotations Target="CatalogService.Transports" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.SemanticKey">
-          <Collection>
-            <PropertyPath>carBrand</PropertyPath>
-          </Collection>
-        </Annotation>
-        <Annotation Term="UI.LineItem">
-          <Collection>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="ID"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="carBrand"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="carModel"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="carBodyId"/>
-              <PropertyValue Property="TextArrangement" EnumMember="UI.LineItemType//TextFirst"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="carStatusId"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="carRegNumber"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="carEngineType/engineName"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="carLiftCapacity"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="carDriver/driverSurname"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="carOriginalLocation/locationLatitude"/>
-            </Record>
-          </Collection>
-        </Annotation>
-        <Annotation Term="UI.HeaderInfo">
-          <Record Type="UI.HeaderInfoType">
-            <PropertyValue Property="TypeName" String="Транспорт"/>
-            <PropertyValue Property="TypeNamePlural" String="Транспорт"/>
-            <PropertyValue Property="Title">
-              <Record Type="UI.DataField">
-                <PropertyValue Property="Label" String="Марка"/>
-                <PropertyValue Property="Value" Path="carBrand"/>
-              </Record>
-            </PropertyValue>
-            <PropertyValue Property="Description">
-              <Record Type="UI.DataField">
-                <PropertyValue Property="Label" String="Модель"/>
-                <PropertyValue Property="Value" Path="carModel"/>
-              </Record>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="UI.Identification">
-          <Collection/>
-        </Annotation>
-        <Annotation Term="UI.SelectionFields">
-          <Collection>
-            <PropertyPath>carBrand</PropertyPath>
-            <PropertyPath>carModel</PropertyPath>
-            <PropertyPath>carBodyId</PropertyPath>
-            <PropertyPath>carStatusId</PropertyPath>
-            <PropertyPath>carRegNumber</PropertyPath>
-            <PropertyPath>carLiftCapacity</PropertyPath>
-          </Collection>
-        </Annotation>
-        <Annotation Term="UI.FieldGroup" Qualifier="Main">
-          <Record Type="UI.FieldGroupType">
-            <PropertyValue Property="Label" String="Main Information"/>
-            <PropertyValue Property="Data">
-              <Collection>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="ID"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="carBrand"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="carModel"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="carBodyId"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="carStatusId"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="carRegNumber"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="UI.FieldGroup" Qualifier="Detail">
-          <Record Type="UI.FieldGroupType">
-            <PropertyValue Property="Label" String="Detail Information"/>
-            <PropertyValue Property="Data">
-              <Collection>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="carEngineType/engineName"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="carLiftCapacity"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="carDriver/driverSurname"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="carOriginalLocation/locationLatitude"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="UI.Facets">
-          <Collection>
-            <Record Type="UI.CollectionFacet">
-              <PropertyValue Property="ID" String="FTransports"/>
-              <PropertyValue Property="Label" String="Транспорт"/>
-              <PropertyValue Property="Facets">
-                <Collection>
-                  <Record Type="UI.ReferenceFacet">
-                    <PropertyValue Property="ID" String="FTransportsMain"/>
-                    <PropertyValue Property="Label" String="Основные данные"/>
-                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Main"/>
-                  </Record>
-                  <Record Type="UI.ReferenceFacet">
-                    <PropertyValue Property="ID" String="FTransportsDetail"/>
-                    <PropertyValue Property="Label" String="Доп. данные"/>
-                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Detail"/>
-                  </Record>
-                </Collection>
-              </PropertyValue>
-            </Record>
-            <Record Type="UI.ReferenceFacet">
-              <PropertyValue Property="ID" String="FDrivers"/>
-              <PropertyValue Property="Label" String="Водители"/>
-              <PropertyValue Property="Target" AnnotationPath="Drivers/@UI.LineItem"/>
-            </Record>
-          </Collection>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.EntityContainer/Transports" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Capabilities.FilterRestrictions">
-          <Record Type="Capabilities.FilterRestrictionsType">
-            <PropertyValue Property="NonFilterableProperties">
-              <Collection>
-                <PropertyPath>carEngineType</PropertyPath>
-                <PropertyPath>carDriver</PropertyPath>
-                <PropertyPath>carOriginalLocation</PropertyPath>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.SortRestrictions">
-          <Record Type="Capabilities.SortRestrictionsType">
-            <PropertyValue Property="NonSortableProperties">
-              <Collection>
-                <PropertyPath>carRegNumber</PropertyPath>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.SearchRestrictions">
-          <Record Type="Capabilities.SearchRestrictionsType">
-            <PropertyValue Property="Searchable" Bool="true"/>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.InsertRestrictions">
-          <Record Type="Capabilities.InsertRestrictionsType">
-            <PropertyValue Property="Insertable" Bool="true"/>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.UpdateRestrictions">
-          <Record Type="Capabilities.UpdateRestrictionsType">
-            <PropertyValue Property="Updatable" Bool="true"/>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.DeleteRestrictions">
-          <Record Type="Capabilities.DeleteRestrictionsType">
-            <PropertyValue Property="Deletable" Bool="true"/>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Ид."/>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carBrand" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Марка"/>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carModel" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Модель"/>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carBodyId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Ид. кузова"/>
-        <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
-        <Annotation Term="Common.TextArrangement" EnumMember="Common.TextArrangementType//TextFirst"/>
-        <Annotation Term="Common.ValueList">
-          <Record Type="Common.ValueListType">
-            <PropertyValue Property="Label" String="Ид. кузова"/>
-            <PropertyValue Property="CollectionPath" String="CarBodies"/>
-            <PropertyValue Property="Parameters">
-              <Collection>
-                <Record Type="Common.ValueListParameterInOut">
-                  <PropertyValue Property="LocalDataProperty" PropertyPath="carBodyId"/>
-                  <PropertyValue Property="ValueListProperty" String="ID"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="carBodyName"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carStatusId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Ид. статуса"/>
-        <Annotation Term="Common.ValueList">
-          <Record Type="Common.ValueListType">
-            <PropertyValue Property="Label" String="Ид. статуса"/>
-            <PropertyValue Property="CollectionPath" String="TStatus"/>
-            <PropertyValue Property="Parameters">
-              <Collection>
-                <Record Type="Common.ValueListParameterInOut">
-                  <PropertyValue Property="LocalDataProperty" PropertyPath="carStatusId"/>
-                  <PropertyValue Property="ValueListProperty" String="ID"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="statusName"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carRegNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Гос. Номер"/>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carEngineType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Text" Path="carEngineType/engineName"/>
-        <Annotation Term="Common.Label" String="Тип двигателя"/>
-        <Annotation Term="Common.ValueList">
-          <Record Type="Common.ValueListType">
-            <PropertyValue Property="CollectionPath" String="Engines"/>
-            <PropertyValue Property="Label" String="Тип двигателя"/>
-            <PropertyValue Property="SearchSupported" Bool="true"/>
-            <PropertyValue Property="Parameters">
-              <Collection>
-                <Record Type="Common.ValueListParameterOut">
-                  <PropertyValue Property="LocalDataProperty" PropertyPath="carEngineType_ID"/>
-                  <PropertyValue Property="ValueListProperty" String="ID"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="engineName"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carLiftCapacity" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Грузоподъемность"/>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carDriver" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Text" Path="carDriver/driverSurname"/>
-        <Annotation Term="Common.Label" String="Водитель"/>
-        <Annotation Term="Common.ValueList">
-          <Record Type="Common.ValueListType">
-            <PropertyValue Property="CollectionPath" String="Drivers"/>
-            <PropertyValue Property="Label" String="Информация о водителе"/>
-            <PropertyValue Property="SearchSupported" Bool="true"/>
-            <PropertyValue Property="Parameters">
-              <Collection>
-                <Record Type="Common.ValueListParameterOut">
-                  <PropertyValue Property="LocalDataProperty" PropertyPath="carDriver_ID"/>
-                  <PropertyValue Property="ValueListProperty" String="ID"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="driverSurname"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="driverName"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carOriginalLocation" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Text" Path="carDriver/driverSurname"/>
-        <Annotation Term="Common.Label" String="Исходное местоположение"/>
-        <Annotation Term="Common.ValueList">
-          <Record Type="Common.ValueListType">
-            <PropertyValue Property="CollectionPath" String="Locations"/>
-            <PropertyValue Property="Label" String="Информация по локациям"/>
-            <PropertyValue Property="SearchSupported" Bool="true"/>
-            <PropertyValue Property="Parameters">
-              <Collection>
-                <Record Type="Common.ValueListParameterOut">
-                  <PropertyValue Property="LocalDataProperty" PropertyPath="carOriginalLocation_ID"/>
-                  <PropertyValue Property="ValueListProperty" String="ID"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="locationLatitude"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="locationLongitude"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carEngineType_ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Text" Path="carEngineType/engineName"/>
-        <Annotation Term="Common.Label" String="Тип двигателя"/>
-        <Annotation Term="Common.ValueList">
-          <Record Type="Common.ValueListType">
-            <PropertyValue Property="CollectionPath" String="Engines"/>
-            <PropertyValue Property="Label" String="Тип двигателя"/>
-            <PropertyValue Property="SearchSupported" Bool="true"/>
-            <PropertyValue Property="Parameters">
-              <Collection>
-                <Record Type="Common.ValueListParameterOut">
-                  <PropertyValue Property="LocalDataProperty" PropertyPath="carEngineType_ID"/>
-                  <PropertyValue Property="ValueListProperty" String="ID"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="engineName"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carDriver_ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Text" Path="carDriver/driverSurname"/>
-        <Annotation Term="Common.Label" String="Водитель"/>
-        <Annotation Term="Common.ValueList">
-          <Record Type="Common.ValueListType">
-            <PropertyValue Property="CollectionPath" String="Drivers"/>
-            <PropertyValue Property="Label" String="Информация о водителе"/>
-            <PropertyValue Property="SearchSupported" Bool="true"/>
-            <PropertyValue Property="Parameters">
-              <Collection>
-                <Record Type="Common.ValueListParameterOut">
-                  <PropertyValue Property="LocalDataProperty" PropertyPath="carDriver_ID"/>
-                  <PropertyValue Property="ValueListProperty" String="ID"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="driverSurname"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="driverName"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.Transports/carOriginalLocation_ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Text" Path="carDriver/driverSurname"/>
-        <Annotation Term="Common.Label" String="Исходное местоположение"/>
-        <Annotation Term="Common.ValueList">
-          <Record Type="Common.ValueListType">
-            <PropertyValue Property="CollectionPath" String="Locations"/>
-            <PropertyValue Property="Label" String="Информация по локациям"/>
-            <PropertyValue Property="SearchSupported" Bool="true"/>
-            <PropertyValue Property="Parameters">
-              <Collection>
-                <Record Type="Common.ValueListParameterOut">
-                  <PropertyValue Property="LocalDataProperty" PropertyPath="carOriginalLocation_ID"/>
-                  <PropertyValue Property="ValueListProperty" String="ID"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="locationLatitude"/>
-                </Record>
-                <Record Type="Common.ValueListParameterDisplayOnly">
-                  <PropertyValue Property="ValueListProperty" String="locationLongitude"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.Drivers" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="UI.LineItem">
-          <Collection>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="ID"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="driverQualification"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="driverSurname"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="driverName"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="driverMiddleName"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="driverPhone"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="driverStatus"/>
-            </Record>
-          </Collection>
-        </Annotation>
-        <Annotation Term="UI.HeaderInfo">
-          <Record Type="UI.HeaderInfoType">
-            <PropertyValue Property="TypeName" String="Водитель"/>
-            <PropertyValue Property="TypeNamePlural" String="Водители"/>
-            <PropertyValue Property="Title">
-              <Record Type="UI.DataField">
-                <PropertyValue Property="Label" String="Фамилия"/>
-                <PropertyValue Property="Value" Path="driverSurname"/>
-              </Record>
-            </PropertyValue>
-            <PropertyValue Property="Description">
-              <Record Type="UI.DataField">
-                <PropertyValue Property="Label" String="Имя"/>
-                <PropertyValue Property="Value" Path="driverName"/>
-              </Record>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="UI.SelectionFields">
-          <Collection>
-            <PropertyPath>ID</PropertyPath>
-            <PropertyPath>driverQualification</PropertyPath>
-            <PropertyPath>driverSurname</PropertyPath>
-            <PropertyPath>driverName</PropertyPath>
-            <PropertyPath>driverMiddleName</PropertyPath>
-            <PropertyPath>driverPhone</PropertyPath>
-          </Collection>
-        </Annotation>
-        <Annotation Term="UI.FieldGroup" Qualifier="Main">
-          <Record Type="UI.FieldGroupType">
-            <PropertyValue Property="Label" String="Main Information"/>
-            <PropertyValue Property="Data">
-              <Collection>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="ID"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="driverQualification"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="driverSurname"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="driverName"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="driverMiddleName"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="driverPhone"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="UI.Facets">
-          <Collection>
-            <Record Type="UI.CollectionFacet">
-              <PropertyValue Property="ID" String="FDrivers"/>
-              <PropertyValue Property="Label" String="Водители"/>
-              <PropertyValue Property="Facets">
-                <Collection>
-                  <Record Type="UI.ReferenceFacet">
-                    <PropertyValue Property="ID" String="FDriversMain"/>
-                    <PropertyValue Property="Label" String="Основные данные"/>
-                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Main"/>
-                  </Record>
-                  <Record Type="UI.ReferenceFacet">
-                    <PropertyValue Property="ID" String="FDriversDetail"/>
-                    <PropertyValue Property="Label" String="Доп. данные"/>
-                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Detail"/>
-                  </Record>
-                </Collection>
-              </PropertyValue>
-            </Record>
-          </Collection>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.Drivers/ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Ид."/>
-      </Annotations>
-      <Annotations Target="CatalogService.Drivers/driverQualification" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Квалификация"/>
-      </Annotations>
-      <Annotations Target="CatalogService.Drivers/driverSurname" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Фамилия"/>
-      </Annotations>
-      <Annotations Target="CatalogService.Drivers/driverName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Имя"/>
-      </Annotations>
-      <Annotations Target="CatalogService.Drivers/driverMiddleName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Отчество"/>
-      </Annotations>
-      <Annotations Target="CatalogService.Drivers/driverPhone" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Телефон"/>
-      </Annotations>
-      <Annotations Target="CatalogService.Drivers/driverStatus" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Статус доступности"/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.SemanticKey">
-          <Collection>
-            <PropertyPath>ID</PropertyPath>
-          </Collection>
-        </Annotation>
-        <Annotation Term="UI.SelectionFields">
-          <Collection>
-            <PropertyPath>ID</PropertyPath>
-            <PropertyPath>orderStatusId</PropertyPath>
-            <PropertyPath>orderWeight</PropertyPath>
-            <PropertyPath>orderDistance</PropertyPath>
-            <PropertyPath>orderPlanDepartureDT</PropertyPath>
-            <PropertyPath>orderPlanArrivalDT</PropertyPath>
-          </Collection>
-        </Annotation>
-        <Annotation Term="UI.HeaderInfo">
-          <Record Type="UI.HeaderInfoType">
-            <PropertyValue Property="TypeName" String="Заказ"/>
-            <PropertyValue Property="TypeNamePlural" String="Заказы"/>
-            <PropertyValue Property="Title">
-              <Record Type="UI.DataField">
-                <PropertyValue Property="Value" Path="ID"/>
-              </Record>
-            </PropertyValue>
-            <PropertyValue Property="Description">
-              <Record Type="UI.DataField">
-                <PropertyValue Property="Label" String="Статус"/>
-                <PropertyValue Property="Value" Path="orderStatusId"/>
-              </Record>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="UI.Identification">
-          <Collection/>
-        </Annotation>
-        <Annotation Term="UI.LineItem">
-          <Collection>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="ID"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="orderStatusId"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="orderWeight"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="orderLoadingLocationId"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="orderDischargeLocationId"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="orderDistance"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="orderTransportInfoId"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="orderPlanDepartureDT"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="orderActualDepartureDT"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="orderPlanArrivalDT"/>
-            </Record>
-            <Record Type="UI.DataField">
-              <PropertyValue Property="Value" Path="orderActualArrivalDT"/>
-            </Record>
-          </Collection>
-        </Annotation>
-        <Annotation Term="UI.FieldGroup" Qualifier="Main">
-          <Record Type="UI.FieldGroupType">
-            <PropertyValue Property="Label" String="Main Information"/>
-            <PropertyValue Property="Data">
-              <Collection>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="ID"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="orderStatusId"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="orderWeight"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="orderLoadingLocationId"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="orderDischargeLocationId"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="UI.FieldGroup" Qualifier="Detail">
-          <Record Type="UI.FieldGroupType">
-            <PropertyValue Property="Label" String="Detail Information"/>
-            <PropertyValue Property="Data">
-              <Collection>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="orderDistance"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="orderTransportInfoId"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="orderPlanDepartureDT"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="orderActualDepartureDT"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="orderPlanArrivalDT"/>
-                </Record>
-                <Record Type="UI.DataField">
-                  <PropertyValue Property="Value" Path="orderActualArrivalDT"/>
-                </Record>
-              </Collection>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="UI.Facets">
-          <Collection>
-            <Record Type="UI.CollectionFacet">
-              <PropertyValue Property="ID" String="FOrders"/>
-              <PropertyValue Property="Label" String="Заказы"/>
-              <PropertyValue Property="Facets">
-                <Collection>
-                  <Record Type="UI.ReferenceFacet">
-                    <PropertyValue Property="ID" String="FOrdersMain"/>
-                    <PropertyValue Property="Label" String="Основные данные"/>
-                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Main"/>
-                  </Record>
-                  <Record Type="UI.ReferenceFacet">
-                    <PropertyValue Property="ID" String="FOrdersDetail"/>
-                    <PropertyValue Property="Label" String="Доп. данные"/>
-                    <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Detail"/>
-                  </Record>
-                </Collection>
-              </PropertyValue>
-            </Record>
-          </Collection>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.EntityContainer/OrdersNew" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Capabilities.FilterRestrictions">
-          <Record Type="Capabilities.FilterRestrictionsType">
-            <PropertyValue Property="NonFilterableProperties">
-              <Collection/>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.SortRestrictions">
-          <Record Type="Capabilities.SortRestrictionsType">
-            <PropertyValue Property="NonSortableProperties">
-              <Collection/>
-            </PropertyValue>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.SearchRestrictions">
-          <Record Type="Capabilities.SearchRestrictionsType">
-            <PropertyValue Property="Searchable" Bool="true"/>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.InsertRestrictions">
-          <Record Type="Capabilities.InsertRestrictionsType">
-            <PropertyValue Property="Insertable" Bool="true"/>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.UpdateRestrictions">
-          <Record Type="Capabilities.UpdateRestrictionsType">
-            <PropertyValue Property="Updatable" Bool="true"/>
-          </Record>
-        </Annotation>
-        <Annotation Term="Capabilities.DeleteRestrictions">
-          <Record Type="Capabilities.DeleteRestrictionsType">
-            <PropertyValue Property="Deletable" Bool="true"/>
-          </Record>
-        </Annotation>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Ид."/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/orderStatusId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Статус заказа"/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/orderWeight" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Вес, кг"/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/orderLoadingLocationId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Местоположение погрузки"/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/orderDischargeLocationId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Местоположение разгрузки"/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/orderDistance" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Расстояние, км"/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/orderTransportInfoId" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Информация о перевозчике"/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/orderPlanDepartureDT" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Плановая дата и время отправления"/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/orderActualDepartureDT" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Фактическая дата и время отправления"/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/orderPlanArrivalDT" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Плановая дата и время прибытия"/>
-      </Annotations>
-      <Annotations Target="CatalogService.OrdersNew/orderActualArrivalDT" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Фактическая дата и время прибытия"/>
-      </Annotations>
-      <Annotations Target="CatalogService.CarBodies/ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Text" Path="carBodyName"/>
-        <Annotation Term="Common.TextArrangement" EnumMember="Common.TextArrangementType//TextLast"/>
-        <Annotation Term="Common.Label" String="Ид. кузова"/>
-      </Annotations>
-      <Annotations Target="CatalogService.CarBodies/carBodyName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Наименование типа кузова"/>
-      </Annotations>
-      <Annotations Target="CatalogService.TStatus/ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Text" Path="statusName"/>
-        <Annotation Term="Common.TextArrangement" EnumMember="Common.TextArrangementType//TextFirst"/>
-        <Annotation Term="Common.Label" String="Ид. статуса"/>
-      </Annotations>
-      <Annotations Target="CatalogService.TStatus/statusName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
-        <Annotation Term="Common.Label" String="Наименование статуса"/>
-      </Annotations>
-    </Schema>
-  </edmx:DataServices>
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:sap="http://www.sap.com/Protocols/SAPData"
+	xmlns:ux="http://www.sap.com/Protocols/OData4SAP/UX" xmlns:gp="http://www.sap.com/Protocols/SAPData/GenericPlayer" Version="1.0">
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Core.V1.xml"><edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Measures.V1.xml"><edmx:Include Alias="Measures" Namespace="Org.OData.Measures.V1"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/os/complete/vocabularies/Org.OData.Capabilities.V1.xml"><edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="http://docs.oasis-open.org/odata/odata-data-aggregation-ext/v4.0/cs02/vocabularies/Org.OData.Aggregation.V1.xml"><edmx:Include Alias="Aggregation" Namespace="Org.OData.Aggregation.V1"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="https://wiki.scn.sap.com/wiki/download/attachments/462030211/Analytics.xml?api=v2"><edmx:Include Alias="Analytics" Namespace="com.sap.vocabularies.Analytics.v1"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2"><edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470971/Communication.xml?api=v2"><edmx:Include Alias="Communication" Namespace="com.sap.vocabularies.Communication.v1"/></edmx:Reference>
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2"><edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/></edmx:Reference>
+	<edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Alias="CatalogService" Namespace="CatalogService">
+			<EntityType Name="Transports">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="carBrand" Type="Edm.String"/><Property Name="carModel" Type="Edm.String"/><Property Name="carBodyId" Type="Edm.Int32" sap:value-list="fixed-values"/><Property Name="carStatusId" Type="Edm.Int32" sap:value-list="fixed-values"/><Property Name="carRegNumber" Type="Edm.String"/><Property Name="carLiftCapacity" Type="Edm.Int32"/><Property Name="carEngineType_ID" Type="Edm.Int32" sap:value-list="fixed-values"/><Property Name="carDriver_ID" Type="Edm.Int32" sap:value-list="fixed-values"/><Property Name="carOriginalLocation_ID" Type="Edm.Int32" sap:value-list="fixed-values"/><NavigationProperty Name="carEngineType" Relationship="CatalogService.Transports_carEngineType" FromRole="Transports" ToRole="Engines"
+					sap:value-list="fixed-values"/><NavigationProperty Name="carDriver" Relationship="CatalogService.Transports_carDriver" FromRole="Transports" ToRole="Drivers"
+					sap:value-list="fixed-values"/><NavigationProperty Name="carOriginalLocation" Relationship="CatalogService.Transports_carOriginalLocation" FromRole="Transports"
+					ToRole="Locations" sap:value-list="fixed-values"/></EntityType>
+			<EntityType Name="Drivers">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="driverQualification" Type="Edm.String"/><Property Name="driverSurname" Type="Edm.String"/><Property Name="driverName" Type="Edm.String"/><Property Name="driverMiddleName" Type="Edm.String"/><Property Name="driverPhone" Type="Edm.Int32"/><Property Name="driverStatus" Type="Edm.Boolean"/></EntityType>
+			<EntityType Name="Orders">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="orderStatusId" Type="Edm.Int32"/><Property Name="orderWeight" Type="Edm.Decimal" Precision="10" Scale="2"/><Property Name="orderLoadingLocationId" Type="Edm.Int32"/><Property Name="orderDischargeLocationId" Type="Edm.Int32"/><Property Name="orderDistance" Type="Edm.Decimal" Precision="10" Scale="2"/><Property Name="orderTransportInfoId" Type="Edm.Int32"/><Property Name="orderPlanDepartureDT" Type="Edm.DateTimeOffset"/><Property Name="orderActualDepartureDT" Type="Edm.DateTimeOffset"/><Property Name="orderPlanArrivalDT" Type="Edm.DateTimeOffset"/><Property Name="orderActualArrivalDT" Type="Edm.DateTimeOffset"/></EntityType>
+			<EntityType Name="OrdersNew">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="orderStatusId" Type="Edm.Int32"/><Property Name="orderWeight" Type="Edm.Decimal" Precision="10" Scale="2"/><Property Name="orderLoadingLocationId" Type="Edm.Int32"/><Property Name="orderDischargeLocationId" Type="Edm.Int32"/><Property Name="orderDistance" Type="Edm.Decimal" Precision="10" Scale="2"/><Property Name="orderTransportInfoId" Type="Edm.Int32"/><Property Name="orderPlanDepartureDT" Type="Edm.DateTimeOffset"/><Property Name="orderActualDepartureDT" Type="Edm.DateTimeOffset"/><Property Name="orderPlanArrivalDT" Type="Edm.DateTimeOffset"/><Property Name="orderActualArrivalDT" Type="Edm.DateTimeOffset"/></EntityType>
+			<EntityType Name="Locations">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="locationLatitude" Type="Edm.Double"/><Property Name="locationLongitude" Type="Edm.Double"/></EntityType>
+			<EntityType Name="Routes">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="routeSerialNumber" Type="Edm.Int32"/><Property Name="routeLocation_ID" Type="Edm.Int32"/><NavigationProperty Name="routeLocation" Relationship="CatalogService.Routes_routeLocation" FromRole="Routes" ToRole="Locations"/></EntityType>
+			<EntityType Name="ETypes">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="eventTypeName" Type="Edm.String"/></EntityType>
+			<EntityType Name="CarBodies">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="carBodyName" Type="Edm.String"/></EntityType>
+			<EntityType Name="TStatus">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="statusName" Type="Edm.String"/></EntityType>
+			<EntityType Name="OStatus">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="statusName" Type="Edm.String"/></EntityType>
+			<EntityType Name="Engines">
+				<Key><PropertyRef Name="ID"/></Key><Property Name="ID" Type="Edm.Int32" Nullable="false"/><Property Name="engineName" Type="Edm.String"/></EntityType>
+			<Association Name="Transports_carEngineType"><End Type="CatalogService.Transports" Multiplicity="*" Role="Transports"/><End Type="CatalogService.Engines" Multiplicity="0..1" Role="Engines"/>
+				<ReferentialConstraint>
+					<Principal Role="Engines"><PropertyRef Name="ID"/></Principal>
+					<Dependent Role="Transports"><PropertyRef Name="carEngineType_ID"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="Transports_carDriver"><End Type="CatalogService.Transports" Multiplicity="*" Role="Transports"/><End Type="CatalogService.Drivers" Multiplicity="0..1" Role="Drivers"/>
+				<ReferentialConstraint>
+					<Principal Role="Drivers"><PropertyRef Name="ID"/></Principal>
+					<Dependent Role="Transports"><PropertyRef Name="carDriver_ID"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="Transports_carOriginalLocation"><End Type="CatalogService.Transports" Multiplicity="*" Role="Transports"/><End Type="CatalogService.Locations" Multiplicity="0..1" Role="Locations"/>
+				<ReferentialConstraint>
+					<Principal Role="Locations"><PropertyRef Name="ID"/></Principal>
+					<Dependent Role="Transports"><PropertyRef Name="carOriginalLocation_ID"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<Association Name="Routes_routeLocation"><End Type="CatalogService.Routes" Multiplicity="*" Role="Routes"/><End Type="CatalogService.Locations" Multiplicity="0..1" Role="Locations"/>
+				<ReferentialConstraint>
+					<Principal Role="Locations"><PropertyRef Name="ID"/></Principal>
+					<Dependent Role="Routes"><PropertyRef Name="routeLocation_ID"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true"><EntitySet Name="Transports" EntityType="CatalogService.Transports"/><EntitySet Name="Drivers" EntityType="CatalogService.Drivers"/><EntitySet Name="Orders" EntityType="CatalogService.Orders"/><EntitySet Name="OrdersNew" EntityType="CatalogService.OrdersNew"/><EntitySet Name="Locations" EntityType="CatalogService.Locations"/><EntitySet Name="Routes" EntityType="CatalogService.Routes"/><EntitySet Name="ETypes" EntityType="CatalogService.ETypes"/><EntitySet Name="CarBodies" EntityType="CatalogService.CarBodies"/><EntitySet Name="TStatus" EntityType="CatalogService.TStatus"/><EntitySet Name="OStatus" EntityType="CatalogService.OStatus"/><EntitySet Name="Engines" EntityType="CatalogService.Engines"/>
+				<AssociationSet Name="Transports_carEngineType" Association="CatalogService.Transports_carEngineType"><End EntitySet="Transports" Role="Transports"/><End EntitySet="Engines" Role="Engines"/></AssociationSet>
+				<AssociationSet Name="Transports_carDriver" Association="CatalogService.Transports_carDriver"><End EntitySet="Transports" Role="Transports"/><End EntitySet="Drivers" Role="Drivers"/></AssociationSet>
+				<AssociationSet Name="Transports_carOriginalLocation" Association="CatalogService.Transports_carOriginalLocation"><End EntitySet="Transports" Role="Transports"/><End EntitySet="Locations" Role="Locations"/></AssociationSet>
+				<AssociationSet Name="Routes_routeLocation" Association="CatalogService.Routes_routeLocation"><End EntitySet="Routes" Role="Routes"/><End EntitySet="Locations" Role="Locations"/></AssociationSet>
+			</EntityContainer>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports">
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.SemanticKey">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carBrand</PropertyPath>
+					</Collection>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.LineItem">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="ID"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carBrand"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carModel"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carBodyId"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TextArrangement" EnumMember="UI.LineItemType//TextFirst"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carStatusId"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carRegNumber"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carEngineType/engineName"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carLiftCapacity"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carDriver/driverSurname"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carOriginalLocation/locationLatitude"/></Record>
+					</Collection>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.HeaderInfo">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.HeaderInfoType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TypeName" String="Транспорт"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TypeNamePlural" String="Транспорт"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Title">
+							<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Марка"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carBrand"/></Record>
+						</PropertyValue>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Description">
+							<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Модель"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carModel"/></Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.Identification"><Collection xmlns="http://docs.oasis-open.org/odata/ns/edm"/></Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.SelectionFields">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carBrand</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carModel</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carBodyId</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carStatusId</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carRegNumber</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carLiftCapacity</PropertyPath>
+					</Collection>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="Main">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Main Information"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carBrand"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carModel"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carBodyId"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carStatusId"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carRegNumber"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="Detail">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Detail Information"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carEngineType/engineName"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carLiftCapacity"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carDriver/driverSurname"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="carOriginalLocation/locationLatitude"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.Facets">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.CollectionFacet"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="FTransports"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Транспорт"/>
+							<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Facets">
+								<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+									<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="FTransportsMain"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Основные данные"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#Main"/></Record>
+									<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="FTransportsDetail"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Доп. данные"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#Detail"/></Record>
+								</Collection>
+							</PropertyValue>
+						</Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="FDrivers"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Водители"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="Drivers/@UI.LineItem"/></Record>
+					</Collection>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.EntityContainer/Transports">
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.FilterRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.FilterRestrictionsType">
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="NonFilterableProperties">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carEngineType</PropertyPath>
+								<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carDriver</PropertyPath>
+								<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carOriginalLocation</PropertyPath>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.SortRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.SortRestrictionsType">
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="NonSortableProperties">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">carRegNumber</PropertyPath>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.SearchRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.SearchRestrictionsType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Searchable" Bool="true"/></Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.InsertRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.InsertRestrictionsType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Insertable" Bool="true"/></Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.UpdateRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.UpdateRestrictionsType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Updatable" Bool="true"/></Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.DeleteRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.DeleteRestrictionsType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Deletable" Bool="true"/></Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/ID"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Ид."/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carBrand"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Марка"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carModel"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Модель"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carBodyId"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Ид. кузова"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.TextArrangement" EnumMember="Common.TextArrangementType//TextFirst"/>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.ValueList">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Ид. кузова"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="CollectionPath" String="CarBodies"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Parameters">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterInOut"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="LocalDataProperty" PropertyPath="carBodyId"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="carBodyName"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carStatusId"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Ид. статуса"/>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.ValueList">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Ид. статуса"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="CollectionPath" String="TStatus"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Parameters">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterInOut"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="LocalDataProperty" PropertyPath="carStatusId"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="statusName"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carRegNumber"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Гос. Номер"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carEngineType"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Text" Path="carEngineType/engineName"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Тип двигателя"/>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.ValueList">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="CollectionPath" String="Engines"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Тип двигателя"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="SearchSupported" Bool="true"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Parameters">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterOut"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="LocalDataProperty" PropertyPath="carEngineType_ID"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="engineName"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carLiftCapacity"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Грузоподъемность"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carDriver"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Text" Path="carDriver/driverSurname"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Водитель"/>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.ValueList">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="CollectionPath" String="Drivers"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Информация о водителе"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="SearchSupported" Bool="true"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Parameters">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterOut"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="LocalDataProperty" PropertyPath="carDriver_ID"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="driverSurname"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="driverName"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carOriginalLocation"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Text" Path="carDriver/driverSurname"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Исходное местоположение"/>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.ValueList">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="CollectionPath" String="Locations"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Информация по локациям"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="SearchSupported" Bool="true"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Parameters">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterOut"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="LocalDataProperty" PropertyPath="carOriginalLocation_ID"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="locationLatitude"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="locationLongitude"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carEngineType_ID"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Text" Path="carEngineType/engineName"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Тип двигателя"/>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.ValueList">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="CollectionPath" String="Engines"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Тип двигателя"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="SearchSupported" Bool="true"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Parameters">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterOut"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="LocalDataProperty" PropertyPath="carEngineType_ID"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="engineName"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carDriver_ID"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Text" Path="carDriver/driverSurname"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Водитель"/>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.ValueList">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="CollectionPath" String="Drivers"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Информация о водителе"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="SearchSupported" Bool="true"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Parameters">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterOut"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="LocalDataProperty" PropertyPath="carDriver_ID"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="driverSurname"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="driverName"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Transports/carOriginalLocation_ID"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Text" Path="carDriver/driverSurname"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Исходное местоположение"/>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.ValueList">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="CollectionPath" String="Locations"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Информация по локациям"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="SearchSupported" Bool="true"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Parameters">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterOut"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="LocalDataProperty" PropertyPath="carOriginalLocation_ID"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="locationLatitude"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Common.ValueListParameterDisplayOnly"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ValueListProperty" String="locationLongitude"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Drivers">
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.LineItem">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="ID"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverQualification"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverSurname"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverName"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverMiddleName"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverPhone"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverStatus"/></Record>
+					</Collection>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.HeaderInfo">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.HeaderInfoType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TypeName" String="Водитель"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TypeNamePlural" String="Водители"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Title">
+							<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Фамилия"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverSurname"/></Record>
+						</PropertyValue>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Description">
+							<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Имя"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverName"/></Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.SelectionFields">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">ID</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">driverQualification</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">driverSurname</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">driverName</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">driverMiddleName</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">driverPhone</PropertyPath>
+					</Collection>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="Main">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Main Information"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverQualification"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverSurname"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverName"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverMiddleName"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="driverPhone"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.Facets">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.CollectionFacet"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="FDrivers"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Водители"/>
+							<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Facets">
+								<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+									<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="FDriversMain"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Основные данные"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#Main"/></Record>
+									<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="FDriversDetail"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Доп. данные"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#Detail"/></Record>
+								</Collection>
+							</PropertyValue>
+						</Record>
+					</Collection>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Drivers/ID"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Ид."/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Drivers/driverQualification"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Квалификация"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Drivers/driverSurname"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Фамилия"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Drivers/driverName"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Имя"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Drivers/driverMiddleName"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Отчество"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Drivers/driverPhone"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Телефон"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.Drivers/driverStatus"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Статус доступности"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew">
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.SemanticKey">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">ID</PropertyPath>
+					</Collection>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.SelectionFields">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">ID</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">orderStatusId</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">orderWeight</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">orderDistance</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">orderPlanDepartureDT</PropertyPath>
+						<PropertyPath xmlns="http://docs.oasis-open.org/odata/ns/edm">orderPlanArrivalDT</PropertyPath>
+					</Collection>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.HeaderInfo">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.HeaderInfoType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TypeName" String="Заказ"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="TypeNamePlural" String="Заказы"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Title">
+							<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="ID"/></Record>
+						</PropertyValue>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Description">
+							<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Статус"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderStatusId"/></Record>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.Identification"><Collection xmlns="http://docs.oasis-open.org/odata/ns/edm"/></Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.LineItem">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="ID"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderStatusId"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderWeight"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderLoadingLocationId"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderDischargeLocationId"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderDistance"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderTransportInfoId"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderPlanDepartureDT"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderActualDepartureDT"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderPlanArrivalDT"/></Record>
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderActualArrivalDT"/></Record>
+					</Collection>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="Main">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Main Information"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="ID"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderStatusId"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderWeight"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderLoadingLocationId"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderDischargeLocationId"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.FieldGroup" Qualifier="Detail">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.FieldGroupType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Detail Information"/>
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Data">
+							<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderDistance"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderTransportInfoId"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderPlanDepartureDT"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderActualDepartureDT"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderPlanArrivalDT"/></Record>
+								<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.DataField"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Value" Path="orderActualArrivalDT"/></Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="UI.Facets">
+					<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+						<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.CollectionFacet"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="FOrders"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Заказы"/>
+							<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Facets">
+								<Collection xmlns="http://docs.oasis-open.org/odata/ns/edm">
+									<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="FOrdersMain"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Основные данные"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#Main"/></Record>
+									<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="UI.ReferenceFacet"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="ID" String="FOrdersDetail"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Label" String="Доп. данные"/><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Target" AnnotationPath="@UI.FieldGroup#Detail"/></Record>
+								</Collection>
+							</PropertyValue>
+						</Record>
+					</Collection>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.EntityContainer/OrdersNew">
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.FilterRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.FilterRestrictionsType">
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="NonFilterableProperties"><Collection xmlns="http://docs.oasis-open.org/odata/ns/edm"/></PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.SortRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.SortRestrictionsType">
+						<PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="NonSortableProperties"><Collection xmlns="http://docs.oasis-open.org/odata/ns/edm"/></PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.SearchRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.SearchRestrictionsType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Searchable" Bool="true"/></Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.InsertRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.InsertRestrictionsType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Insertable" Bool="true"/></Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.UpdateRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.UpdateRestrictionsType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Updatable" Bool="true"/></Record>
+				</Annotation>
+				<Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Capabilities.DeleteRestrictions">
+					<Record xmlns="http://docs.oasis-open.org/odata/ns/edm" Type="Capabilities.DeleteRestrictionsType"><PropertyValue xmlns="http://docs.oasis-open.org/odata/ns/edm" Property="Deletable" Bool="true"/></Record>
+				</Annotation>
+			</Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/ID"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Ид."/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/orderStatusId"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Статус заказа"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/orderWeight"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Вес, кг"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/orderLoadingLocationId"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Местоположение погрузки"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/orderDischargeLocationId"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Местоположение разгрузки"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/orderDistance"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Расстояние, км"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/orderTransportInfoId"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Информация о перевозчике"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/orderPlanDepartureDT"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Плановая дата и время отправления"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/orderActualDepartureDT"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Фактическая дата и время отправления"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/orderPlanArrivalDT"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Плановая дата и время прибытия"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.OrdersNew/orderActualArrivalDT"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Фактическая дата и время прибытия"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.CarBodies/ID"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Text" Path="carBodyName"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.TextArrangement" EnumMember="Common.TextArrangementType//TextLast"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Ид. кузова"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.CarBodies/carBodyName"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Наименование типа кузова"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.TStatus/ID"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Text" Path="statusName"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.TextArrangement" EnumMember="Common.TextArrangementType//TextFirst"/><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Ид. статуса"/></Annotations>
+			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="CatalogService.TStatus/statusName"><Annotation xmlns="http://docs.oasis-open.org/odata/ns/edm" Term="Common.Label" String="Наименование статуса"/></Annotations>
+		</Schema>
+	</edmx:DataServices>
 </edmx:Edmx>

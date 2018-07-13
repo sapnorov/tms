@@ -57,23 +57,7 @@ modules:
  
 
 
- - name: TMSDriversApp
-   type: html5
-   path: TMSDriversApp
-   parameters:
-      disk-quota: 256M
-      memory: 256M
-   build-parameters:
-      builder: grunt
-   requires:
-    - name: srv_api
-      group: destinations
-      properties:
-         forwardAuthToken: true
-         strictSSL: false
-         name: srv_api
-         url: ~{url}
-    - name: uaa_tms
+ 
 
 
  - name: TMSOrdersApp
@@ -113,6 +97,19 @@ modules:
          url: ~{url}
     - name: uaa_tms
 
+
+ - name: TMSDriversApp
+   type: html5
+   path: TMSDriversApp
+   parameters:
+      disk-quota: 256M
+      memory: 256M
+   build-parameters:
+      builder: grunt
+   requires:
+    - name: uaa_tms
+    - name: dest_tms
+
 resources:
  - name: hdi_db
    properties:
@@ -124,4 +121,11 @@ resources:
       path: ./xs-security.json
       service-plan: application
    type: com.sap.xs.uaa
+
+
+ - name: dest_tms
+   parameters:
+      service-plan: lite
+      service: destination
+   type: org.cloudfoundry.managed-service
 

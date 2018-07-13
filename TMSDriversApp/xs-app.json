@@ -6,9 +6,10 @@
   },
   "routes": [
     {
-      "source": "/odata/v2",
+      "source": "^/TMS_CLONING/(.*)$",
+      "target": "$1",
       "authenticationType": "none",
-      "destination": "srv_api",
+      "destination": "TMS_CLONING",
       "csrfProtection": false
     },
     {

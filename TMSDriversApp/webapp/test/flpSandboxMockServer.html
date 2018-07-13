@@ -37,7 +37,7 @@
 			},
 			applications: {
 				"masterDetail-display": {
-					"additionalInformation": "SAPUI5.Component=TMSDriversApp",
+					"additionalInformation": "SAPUI5.Component=my.tms.tmsdriversapp",
 					"applicationType": "URL",
 					"url": "../"
 				}
@@ -53,7 +53,7 @@
 			data-sap-ui-libs="sap.m, sap.ushell"
 			data-sap-ui-theme="sap_belize"
 			data-sap-ui-compatVersion="edge"
-			data-sap-ui-resourceroots='{"TMSDriversApp": "../", "sap.ui.demo.masterdetail.service": "./service/"}'
+			data-sap-ui-resourceroots='{"my.tms.tmsdriversapp": "../", "sap.ui.demo.masterdetail.service": "./service/"}'
 			data-sap-ui-frameOptions='allow'> // NON-SECURE setting for testing environment
 	</script>
 
@@ -63,7 +63,7 @@
 	        jQuery.sap.require("sap.ui.fl.FakeLrepConnector");
 	        sap.ui.fl.FakeLrepConnector.enableFakeConnector("fakeLRep.json");
 			sap.ui.require([
-				"TMSDriversApp/localService/mockserver"
+				"my/tms/tmsdriversapp/localService/mockserver"
 			], function (server) {
 				// set up test service for local testing
 				server.init();

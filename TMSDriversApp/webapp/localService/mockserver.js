@@ -3,7 +3,7 @@ sap.ui.define([
 ], function (MockServer) {
 	"use strict";
 	var oMockServer,
-		_sAppModulePath = "TMSDriversApp/",
+		_sAppModulePath = "my/tms/tmsdriversapp/",
 		_sJsonFilesModulePath = _sAppModulePath + "localService/mockdata";
 
 	return {

@@ -1,7 +1,7 @@
 {
 	"_version": "1.8.0",
 	"sap.app": {
-		"id": "TMSDriversApp",
+		"id": "my.tms.tmsdriversapp",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"applicationVersion": {
@@ -14,7 +14,7 @@
 		},
 		"dataSources": {
 			"mainService": {
-				"uri": "/odata/v2/CatalogService/",
+				"uri": "/TMS_CLONING/odata/v2/CatalogService/",
 				"type": "OData",
 				"settings": {
 					"localUri": "localService/metadata.xml"
