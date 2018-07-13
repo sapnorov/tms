@@ -1,0 +1,35 @@
+{
+	"fileName": "id_1531523670254_129_propertyChange",
+	"fileType": "change",
+	"changeType": "propertyChange",
+	"reference": "app.Component",
+	"packageName": "$TMP",
+	"content": {
+		"property": "showValueHelp",
+		"newValue": false
+	},
+	"selector": {
+		"id": "app::sap.suite.ui.generic.template.ObjectPage.view.Details::Transports--FTransportsMain::carBodyId::Field",
+		"type": "sap.ui.comp.smartfield.SmartField",
+		"idIsLocal": false
+	},
+	"layer": "CUSTOMER_BASE",
+	"texts": {},
+	"namespace": "apps/app/changes/",
+	"creation": "2018-07-13T23:15:06.965Z",
+	"originalLanguage": "RU",
+	"conditions": {},
+	"context": "",
+	"support": {
+		"generator": "Change.createInitialFileContent",
+		"service": "",
+		"user": "",
+		"sapui5Version": "1.54.7"
+	},
+	"dependentSelector": {},
+	"validAppVersions": {
+		"creation": "1.0.0",
+		"from": "1.0.0",
+		"to": "1.0.0"
+	}
+}
