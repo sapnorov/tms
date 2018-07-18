@@ -4,8 +4,8 @@ service CatalogService {
   entity Drivers as projection on tms.Drivers; //@readonly 
   entity Orders as projection on tms.Orders;  //@insertonly 
   entity OrdersNew as projection on tms.OrdersNew;   
-  //entity Events as projection on tms.Events;  //@insertonly  
- 
+  entity Events as projection on tms.Events;  //@insertonly  
+  entity GeoLocations as projection on tms.GeoLocations;
  
   entity Locations as projection on tms.Locations; //@readonly  
   entity Routes as projection on tms.Routes; //@readonly  

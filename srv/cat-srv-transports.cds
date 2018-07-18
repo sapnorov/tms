@@ -381,9 +381,11 @@ annotate CatalogService.TStatus with {
 
 // 08.07.2018
 annotate CatalogService.OrdersNew with {
-  ID 
+  UUID 
     @Common.Label : 'Ид.';
-    //@Common.FieldControl: #ReadOnly;    
+    //@Common.FieldControl: #ReadOnly;   
+  orderNumber 
+    @Common.Label : 'Номер';    
   orderStatusId 
     @Common.Label : 'Статус заказа';
     //@Common.FieldControl: #ReadOnly;    
@@ -418,7 +420,7 @@ annotate CatalogService.OrdersNew with {
 
 
 annotate CatalogService.OrdersNew with @(
-    Common: { SemanticKey: [ID] },
+    Common: { SemanticKey: [orderNumber] },
       
     Capabilities: {
         Insertable:true, Updatable:true, Deletable:true,
@@ -440,6 +442,7 @@ annotate CatalogService.OrdersNew with @(
   UI.SelectionFields: 
   [
     ID,
+    orderNumber,    
     orderStatusId,
     orderWeight,
     orderDistance,    
@@ -450,7 +453,7 @@ annotate CatalogService.OrdersNew with @(
   UI.HeaderInfo: {
     TypeName:'Заказ', 
     TypeNamePlural:'Заказы',
-    Title: { Value: ID },
+    Title: { Value: orderNumber },
 	Description: { Label: 'Статус', Value: orderStatusId},
 	//Description: { Label: 'Расстояние, км', Value: orderDistance},
 	
@@ -463,6 +466,7 @@ annotate CatalogService.OrdersNew with @(
   
   UI.LineItem: [ 
     {$Type: 'UI.DataField', Value: ID},
+    {$Type: 'UI.DataField', Value: orderNumber},    
     {$Type: 'UI.DataField', Value: orderStatusId},
     {$Type: 'UI.DataField', Value: orderWeight},
     {$Type: 'UI.DataField', Value: orderLoadingLocationId},
@@ -479,6 +483,7 @@ annotate CatalogService.OrdersNew with @(
 	Label: 'Main Information',
 	Data: [
             {$Type: 'UI.DataField', Value: ID},	
+    		{$Type: 'UI.DataField', Value: orderNumber},            
     		{$Type: 'UI.DataField', Value: orderStatusId},
     		{$Type: 'UI.DataField', Value: orderWeight},
     		{$Type: 'UI.DataField', Value: orderLoadingLocationId},
